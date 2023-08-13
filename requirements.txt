@@ -1,0 +1,9 @@
+langchain
+openai
+python-dotenv
+anthropic
+flask
+flask-cors
+chromadb
+tiktoken
+authlib
