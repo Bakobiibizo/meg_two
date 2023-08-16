@@ -2,10 +2,10 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from services.langchain.openai_messages import Messages
-from services.langchain.openai_chat import OpenAIChatBot
-from services.langchain.openai_image import OpenAIImage
-from services.langchain.anthropic_chat import AnthropicChatBot
+from services.langchain_services.openai_messages import Messages
+from services.langchain_services.openai_chat import OpenAIChatBot
+from services.langchain_services.openai_image import OpenAIImage
+from services.langchain_services.anthropic_chat import AnthropicChatBot
 from server.create_ai_response import CreateAIResponse
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from authlib.integrations.flask_client import OAuth

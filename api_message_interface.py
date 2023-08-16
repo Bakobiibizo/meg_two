@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from message import Messages
+from langchain_services. import Messages
 
 class MessageInterface(metaclass=ABCMeta):
     def __init__(self):

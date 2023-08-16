@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from services.langchain.openai_chat import OpenAIChatBot
+from services.langchain_services.openai_chat import OpenAIChatBot
 from langchain.schema import HumanMessage
 
 def test_openai_chat():

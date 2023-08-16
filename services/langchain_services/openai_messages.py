@@ -22,7 +22,7 @@ class Messages():
             if role == "assistant":
                 message = AIMessage(content=message)
             if role == "system":
-                message =SystemMessage(content=message)
+                message = SystemMessage(content=message)
             self.context_window.add_message(message=message)
 
             return self.context

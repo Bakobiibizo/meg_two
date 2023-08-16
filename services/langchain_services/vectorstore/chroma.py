@@ -1,7 +1,7 @@
 from langchain.vectorstores import Chroma
 from langchain.docstore.document import Document
-from services.langchain.vectorstore.text_splitter import TextSplitter
-from services.langchain.vectorstore.embeddings import Embeddings
+from services.langchain_services.vectorstore.text_splitter import TextSplitter
+from services.langchain_services.vectorstore.embeddings import Embeddings
 from langchain.document_loaders import TextLoader
 
 class ChromaDB():

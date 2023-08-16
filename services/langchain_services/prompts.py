@@ -4,4 +4,4 @@ from langchain.prompts.chat import (
     AIMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
-from services.langchain.openai_messages import Messages
+from services.langchain_services.openai_messages import Messages

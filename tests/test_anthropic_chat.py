@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from services.langchain.anthropic_chat import AnthropicChatBot
+from services.langchain_services.anthropic_chat import AnthropicChatBot
 from langchain.schema import HumanMessage, SystemMessage
 
 def test_anthropic_chat():
