@@ -37,7 +37,7 @@ pytest==7.3.1
 python-dotenv==1.0.0
 PyYAML==6.0.1
 regex==2023.8.8
-requests==2.30.0
+requests==2.31.0
 rich==13.3.5
 scipy==1.10.1
 smmap==5.0.0
