@@ -50,12 +50,11 @@ class AudioProcessor:
     def collect__file_path_s(self, suffixes: set[str]) -> List[str]:
         logger.info(f"Collecting file paths: {self.dir_path}")
         try:
-            file_paths = [
+            return [
                 str(file)
                 for file in self.path_file_s.glob("**/*")
                 if file.suffix in suffixes
             ]
-            return file_paths
         except OSError as e:
             logger.error(f"Error accessing directory: {self.dir_path}")
             logger.exception(e)
@@ -66,12 +65,13 @@ class AudioProcessor:
         logger.info(f"Checking file types: {files}")
         file_path_s = []
 
-        unsupported_files = [
+        if unsupported_files := [
             file
             for file in files
-            if not file.endswith(tuple(self.audio_suffixes.union(self.video_suffixes)))
-        ]
-        if unsupported_files:
+            if not file.endswith(
+                tuple(self.audio_suffixes.union(self.video_suffixes))
+            )
+        ]:
             logger.error(f"File type not supported: {unsupported_files}")
             return unsupported_files
 
@@ -81,18 +81,14 @@ class AudioProcessor:
             if not self.done_video
         ):
             logger.error(f"File type not supported: {files}")
-            return "File type not supported. Supported file types are: {}".format(
-                self.audio_suffixes.union(self.video_suffixes)
-            )
+            return f"File type not supported. Supported file types are: {self.audio_suffixes.union(self.video_suffixes)}"
 
         audio_files = [
             file for file in files if file.endswith(tuple(self.audio_suffixes))
         ]
-        video_files = [
+        if video_files := [
             file for file in files if file.endswith(tuple(self.video_suffixes))
-        ]
-
-        if video_files:
+        ]:
             audio_files += self.video_to_mp3(video_files)
 
         file_path_s += audio_files
@@ -105,11 +101,7 @@ class AudioProcessor:
                     if not self.done_video
                 ):
                     logger.error(f"File type not supported: {files}")
-                    return (
-                        "File type not supported. Supported file types are: {}".format(
-                            self.audio_suffixes.union(self.video_suffixes)
-                        )
-                    )
+                    return f"File type not supported. Supported file types are: {self.audio_suffixes.union(self.video_suffixes)}"
             except Exception as e:
                 logger.error(f"Error: {e}")
 
@@ -125,7 +117,7 @@ class AudioProcessor:
                 audio_file_path = f"{os.path.splitext(file)[0]}.mp3"
                 video.write_audiofile(audio_file_path)
                 self.done_video = True
-            except (FileNotFoundError, TypeError, OSError) as e:
+            except (TypeError, OSError) as e:
                 logger.error(
                     f"Error: {e}\nThere was an issue converting the video to audio."
                 )
@@ -155,10 +147,9 @@ class AudioProcessor:
             raise FileNotFoundError(f"File not found: {audio_file_path_s}")
 
         audio = AudioSegment.from_file(audio_file_path_s)
-        detected_silence = detect_nonsilent(
+        if detected_silence := detect_nonsilent(
             audio_file_path_s, min_silence_len, silence_thresh
-        )
-        if detected_silence:
+        ):
             for start, end in detected_silence:
                 try:
                     segment = audio[start:end]
@@ -175,11 +166,8 @@ class AudioProcessor:
         min_silence_len: int = 500,
         silence_thresh: int = -32,
     ):
-        audio_chunk_s = []
         logger.info(f"Checking file length: {file_s}")
         for file in file_s:
             if os.path.getsize(file) > 256 * 128 * 10:
                 file_s = self.segment_audio(file, min_silence_len, silence_thresh)
-        for file in file_s:
-            audio_chunk_s.append(file)
-        return audio_chunk_s
+        return list(file_s)

@@ -30,11 +30,9 @@ def format_minutes(minutes):
 
     """
     logger.log("Formatting minutes")
-    human_readable_text = ""
-
-    for key, value in minutes.items():
-        human_readable_text += f"{key}: {value}\n"
-
+    human_readable_text = "".join(
+        f"{key}: {value}\n" for key, value in minutes.items()
+    )
     with open("src/out/minutes.txt", "w") as file:
         file.write(human_readable_text)
     logger.log("Minutes formatted.")

@@ -97,8 +97,7 @@ def authorize():
 
 @app.route('/profile')
 def profile():
-    token = session.get('token')
-    if token:
+    if token := session.get('token'):
         resp = oauth.auth0.get('profile')
         profile_data = resp.json()
         return render_template('profile.html', profile=profile_data)
